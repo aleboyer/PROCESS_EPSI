@@ -48,7 +48,7 @@ def Volt2g(V,offset=1.65):
 
 def test_fps(use_blit=True):
 
-    fid=open('../../data/data_c_streaming_double.txt','r')
+    fid=open('../data/data_c_streaming_double.txt','r')
     eof=fid.seek(0,2)
     fid.seek(eof-465);
    
@@ -214,7 +214,8 @@ def test_fps(use_blit=True):
           ax1.set_ylim([ymin, ymax])
           ax2.set_ylim([ymin, ymax])
           ax3.set_ylim([g_ymin, g_ymax])
-
+          
+          plt.pause(.000001)
     fps = niter / (time.time() - tic)
     return fps,data
 

@@ -30,8 +30,8 @@ int main() {
     fReadData  = open(device, O_RDWR | O_NOCTTY | O_NDELAY);
     //   fReadData  = open(device, O_RDWR | O_NOCTTY );
     
-    fileData=fopen("../../data/data_c_streaming.txt","w+");
-    fileDatadouble=fopen("../../data/data_c_streaming_double.txt","w+");
+    fileData=fopen("/Users/aleboyer/ARNAUD/SCRIPPS/SHEAR_PROBE/PROCESS_EPSI/data/data_c_streaming.txt","w+");
+    fileDatadouble=fopen("/Users/aleboyer/ARNAUD/SCRIPPS/SHEAR_PROBE/PROCESS_EPSI/data/data_c_streaming_double.txt","w+");
     
     if(fReadData == -1) {
         printf( "failed to open port\n" );
@@ -65,7 +65,7 @@ int main() {
     
     
     if(config.c_ispeed != B115200 || config.c_ispeed != B115200) {
-        printf(" baud rate is not 446800\n");
+        printf(" baud rate is not 406800\n");
         //config.c_ispeed = B115200;
         //config.c_ospeed = B115200;
         config.c_ispeed = 460800;
@@ -92,12 +92,12 @@ int main() {
                 case 0 :  // First state : wait for 0x1e read 32 bytes and check 0x1e
  //                    printf("coucou, state = %d\n",state);
                      if (read(fReadData,&buffer,1)>0){
-//                        printf("coucou, state = %d\n",state);
+                        printf("coucou, state = %d\n",state);
                          //printf("coucou start case 0, state = %d\n",state);
 
                         if (buffer==0x1e){
                             printf("%02x\n",buffer);
-//                            printf("coucou, state = %d\n",state);
+                            printf("coucou, state = %d\n",state);
                             for (i=1;i<=numChannel;i++){
                                 buf_ptr      = (uint8_t*) &biggerBuffer;
                                 biggerBuffer = 0;
@@ -127,8 +127,8 @@ int main() {
                                     count_endian--;
                                 } // end if read buffer
                             } //end while count endian
-                            //printf("%08x\n",biggerBuffer);
- 
+                            printf("%08x\n",biggerBuffer);
+  
                             
                             // get the next byte and check if this 0x1e so that we are sure to be sync to get the sample
 //                            printf("coucou, state = %d",state);
@@ -170,7 +170,8 @@ int main() {
                                 count_endian--;
                             } // end if read buffer
                         } //end while count endian
-                        //printf("%08x\n",biggerBuffer);
+                        printf("%08x\n",biggerBuffer);
+                        
                         fprintf(fileData,"0x%08x,",biggerBuffer);  // file print
                         fprintf(fileDatadouble,"%9u,",biggerBuffer);  // file print
                         fflush(fileData);
